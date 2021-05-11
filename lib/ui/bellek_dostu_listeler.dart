@@ -26,15 +26,8 @@ class BellekDostuListeler extends StatelessWidget {
             trailing: Icon(Icons.arrow_forward_sharp),
             tileColor: tumOgrenciler[index]._cinsiyet == true ? Colors.blue.shade200 : Colors.pink.shade200,
             onTap: () {
-              Fluttertoast.showToast(
-                  msg: tumOgrenciler[index]._isim+" tıklandı",
-                  toastLength: Toast.LENGTH_LONG,
-                  gravity: ToastGravity.CENTER,
-                  timeInSecForIosWeb: 1,
-                  backgroundColor: Colors.orange,
-                  textColor: Colors.white,
-                  fontSize: 20.0
-              );
+              toastMesajGoster(index);
+              alertDialogGoster(context, index);
             },
           ),
         );
@@ -52,6 +45,57 @@ class BellekDostuListeler extends StatelessWidget {
     );
   }
 
+  toastMesajGoster(int i) {
+    Fluttertoast.showToast(
+        msg: tumOgrenciler[i]._isim+" tıklandı",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.orange,
+        textColor: Colors.white,
+        fontSize: 20.0
+    );
+  }
+
+  alertDialogGoster(BuildContext context, int i) {
+    showDialog(
+      context: context,
+      //boşluk tıklanınca kapatma..
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Alert başlığı"),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: [
+                Text("${tumOgrenciler[i]._isim+" tıklandı"}"),
+                Text("${tumOgrenciler[i]._aciklama+" tıklandı"}"),
+              ],
+            ),
+          ),
+          actions: [
+            ButtonBar(
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text("TAMAM"),
+                ),
+                RaisedButton(
+                  child: Text("KAPAT"),
+                  onPressed: () => {
+                    Navigator.of(context).pop()
+                  },
+                ),
+              ],
+            ),
+          ],
+        );
+      }
+    );
+  }
+
 }
 
 class Ogrenci{
@@ -59,6 +103,12 @@ class Ogrenci{
   String _aciklama;
   bool _cinsiyet;
   Ogrenci(this._isim, this._aciklama, this._cinsiyet);
+
+  @override
+  String toString() {
+    return "Seçilen öğrenci adı $_isim, açıklaması $_aciklama";
+  }
+
 }
 
 
