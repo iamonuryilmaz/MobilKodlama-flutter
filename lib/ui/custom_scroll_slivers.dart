@@ -116,3 +116,8 @@ class CollapsableToolbar extends StatelessWidget {
     return Color.fromARGB(matematik.Random().nextInt(255), matematik.Random().nextInt(255), matematik.Random().nextInt(255), matematik.Random().nextInt(255));
   }
 }
+
+
+/*
+* Gelecek hafta ödev var, github kullanımı...
+* */
