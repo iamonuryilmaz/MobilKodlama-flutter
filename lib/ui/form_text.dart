@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import "dart:convert";
+import 'package:http/http.dart' as http;
 
 class FormTextField extends StatefulWidget {
   @override
@@ -6,7 +8,9 @@ class FormTextField extends StatefulWidget {
 }
 
 class _FormTextFieldState extends State<FormTextField> {
+  //validate edilmiş temiz bir veri var ... api göndermeye hazır
   String _adsoyad, _sifre, _email;
+
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -22,6 +26,7 @@ class _FormTextFieldState extends State<FormTextField> {
       body: Padding(
         padding: EdgeInsets.all(20),
         child: Form(
+          //formun benzersiz numarası
           key: formKey,
           autovalidateMode: AutovalidateMode.always,
           child: ListView(
@@ -54,6 +59,7 @@ class _FormTextFieldState extends State<FormTextField> {
                     labelText: "E-Posta Adresi",
                     border: OutlineInputBorder()),
                 validator: (String degeri) {
+                  //regex email
                   if (!degeri.contains("@")) {
                     return "Lütfen geçerli bir e-posta giriniz.";
                   } else {
@@ -101,12 +107,36 @@ class _FormTextFieldState extends State<FormTextField> {
   _girisleriKontrolEt() {
     if(formKey.currentState.validate()){
       formKey.currentState.save();
-      debugPrint("İsim soyisim = $_adsoyad");
+      /*debugPrint("İsim soyisim = $_adsoyad");
       debugPrint("E-posta = $_email");
       debugPrint("Şifre = $_sifre");
-      //POST işlemi yapılacak....
+      //POST işlemi yapılacak.... */
+      createStudent();
     }else{
       debugPrint("Hatalı alanlar var kontrol et !");
     }
   }
+
+  Future<void> createStudent() async {
+    http.Response response = await http.post(
+      Uri.parse("https://api.onurylmz.com/mobile-students/create"),
+      headers: <String, String>{
+        'Content-Type' : 'application/json; charset=UTF-8'
+      },
+      body: jsonEncode(<String, dynamic>{
+        'first_name': _adsoyad,
+        'last_name' : _adsoyad,
+        'email': _email,
+        'password': _sifre
+      }),
+    );
+
+    if(response.statusCode == 200){
+      return debugPrint("Başarılı !");
+    }else{
+      throw Exception("Bağlanamadı ! Hata kodu: ${response.statusCode}");
+    }
+
+  }
 }
+

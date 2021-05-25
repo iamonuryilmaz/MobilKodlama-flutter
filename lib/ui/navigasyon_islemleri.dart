@@ -72,6 +72,14 @@ class NavigasyonIslemleri extends StatelessWidget {
                 Navigator.pushNamed(context, "/FormYapisi");
               },
             ),
+            Divider(height: 15,),
+            ElevatedButton(
+              child: Text("Http İşlemleri"),
+              style: ElevatedButton.styleFrom(primary: Colors.orange),
+              onPressed: () {
+                Navigator.pushNamed(context, "/HttpIslemleri");
+              },
+            ),
           ],
         ),
       ),

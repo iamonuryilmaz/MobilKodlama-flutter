@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobil_kodlama_dersi/ui/form_islemleri.dart';
+import 'package:mobil_kodlama_dersi/ui/http_islemleri.dart';
 import 'ui/drawer_islemleri.dart';
 import 'ui/form_text.dart';
 import 'ui/navigasyon_islemleri.dart';
@@ -19,6 +20,7 @@ void main() {
         '/DrawerMenu': (context) => DrawerKullanimi(),
         '/FormIslemleri': (context) => FormIslemleri(),
         '/FormYapisi': (context) => FormTextField(),
+        '/HttpIslemleri': (context) => HttpIslemleri(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
